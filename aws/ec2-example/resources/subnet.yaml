@@ -1,0 +1,19 @@
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: Subnet
+metadata:
+  name: subnet
+spec:
+  forProvider:
+    availabilityZone: eu-central-1a
+    cidrBlock: 10.0.0.0/24
+    mapPublicIPOnLaunch: true
+    region: eu-central-1
+    vpcIdRef:
+      name: vpc
+    tags:
+      - key: Environment
+        value: crossplane-example
+      - key: Name
+        value: subnet-crossplane
+  providerConfigRef:
+    name: awsconfig

@@ -1,0 +1,7 @@
+# cluster-config.yml
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: kinda
+nodes:
+- role: control-plane
+- role: worker

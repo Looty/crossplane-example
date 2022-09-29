@@ -1,0 +1,29 @@
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: SecurityGroup
+metadata:
+  name: securitygroup
+spec:
+  forProvider:
+    region: eu-central-1
+    vpcIdRef:
+      name: vpc 
+    groupName: crossplane-sg
+    description: crossplane security group example, port http+ssh
+    ingress:
+      - fromPort: 22
+        toPort: 22
+        ipProtocol: tcp
+        ipRanges:
+          - cidrIp: 192.168.31.1/32
+      - fromPort: 80
+        toPort: 80
+        ipProtocol: tcp
+        ipRanges:
+          - cidrIp: 192.168.31.1/32
+    tags:
+      - key: Environment
+        value: crossplane-example
+      - key: Name
+        value: securitygroup-crossplane
+  providerConfigRef:
+    name: awsconfig

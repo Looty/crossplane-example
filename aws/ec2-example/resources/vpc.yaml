@@ -1,0 +1,16 @@
+apiVersion: ec2.aws.crossplane.io/v1beta1
+kind: VPC
+metadata:
+  name: vpc
+spec:
+  forProvider:
+    cidrBlock: 10.0.0.0/16
+    region: eu-central-1
+    instanceTenancy: default
+    tags:
+      - key: Environment
+        value: crossplane-example
+      - key: Name
+        value: vpc-crossplane
+  providerConfigRef:
+    name: awsconfig

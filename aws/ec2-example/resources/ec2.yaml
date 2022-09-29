@@ -1,0 +1,27 @@
+apiVersion: ec2.aws.crossplane.io/v1alpha1
+kind: Instance
+metadata:
+  name: ec2
+spec:
+  forProvider:
+    blockDeviceMappings:
+      - deviceName: "/dev/xvda"
+        ebs:
+          deleteOnTermination: true
+          volumeSize: 8 #GB
+          volumeType: gp2
+    imageId: ami-05ff5eaef6149df49
+    instanceType: t2.micro
+    keyName: crossplane-example
+    region: eu-central-1
+    subnetIdRef:
+      name: subnet
+    securityGroupRefs:
+      - name: securitygroup
+    tags:
+      - key: Environment
+        value: crossplane-example
+      - key: Name
+        value: ec2-crossplane
+  providerConfigRef:
+    name: awsconfig
