@@ -1,0 +1,35 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: compositionvpc.networking.example.org
+spec:
+  group: networking.example.org
+  names:
+    kind: CompositionVpc
+    plural: compositionvpc
+  claimNames:
+    kind: VPC
+    plural: vpc
+  versions:
+  - name: v1alpha1
+    served: true
+    referenceable: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              parameters:
+                type: object
+                properties:
+                  cidrBlock:
+                    type: string
+                  region:
+                    type: string
+                required:
+                - cidrBlock
+                - region
+            required:
+            - parameters

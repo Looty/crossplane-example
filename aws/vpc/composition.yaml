@@ -1,0 +1,25 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: example-vpc
+spec:
+  compositeTypeRef:
+    apiVersion: networking.example.org/v1alpha1
+    kind: CompositionVpc
+  resources:
+  - name: vpc
+    base:
+      apiVersion: ec2.aws.crossplane.io/v1beta1
+      kind: VPC
+      spec:
+        forProvider:
+          instanceTenancy: default
+        providerConfigRef:
+          name: awsconfig
+    patches:
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.parameters.cidrBlock
+      toFieldPath: spec.forProvider.cidrBlock
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.parameters.region
+      toFieldPath: spec.forProvider.region

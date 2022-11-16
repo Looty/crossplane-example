@@ -1,0 +1,104 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: compositionec2.compute.example.org
+spec:
+  group: compute.example.org
+  names:
+    kind: CompositionEc2
+    plural: compositionec2
+  claimNames:
+    kind: EC2
+    plural: ec2
+  versions:
+  - name: v1alpha1
+    served: true
+    referenceable: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        properties:
+          spec:
+            type: object
+            properties:
+              parameters:
+                type: object
+                properties:
+                  ec2:
+                    type: object
+                    properties:
+                      storage:
+                        type: object
+                        properties:
+                          deviceName:
+                            type: string
+                            default: "/dev/xvda"
+                          deleteOnTermination:
+                            type: boolean
+                            default: true
+                          volumeSize:
+                            type: int
+                            default: 8
+                          volumeType:
+                            type: string
+                            default: gp2
+                      imageId:
+                        type: string
+                        default: ami-05ff5eaef6149df49
+                      instanceType:
+                        type: string
+                        default: t2.micro
+                      keyName:
+                        type: string
+                      region:
+                        type: string
+                      subnetIdRef:
+                        type: ??
+                      securityGroupRefs:
+                        type: ??
+                  vpc:
+                    type: object
+                    properties:
+                      cidrBlock:
+                        type: string
+                      region:
+                        type: string
+                      instanceTenancy:
+                        type: string
+                        default: default
+                  subnet:
+                    type: object
+                    properties:
+                      availabilityZone:
+                        type: string
+                      cidrBlock:
+                        type: string
+                      mapPublicIPOnLaunch:
+                        type: boolean
+                        default: false
+                      region:
+                        type: string
+                      vpcIdRef:
+                        type: ??
+                  securitygroup:
+                    type: object
+                    properties:
+                      region:
+                        type: string
+                      vpcIdRef:
+                        type: ??
+                      groupName:
+                        type: string
+                      description:
+                        type: string
+                      ingress:
+                        type: array
+                        items:
+                          type: string
+                        properties:
+
+                required:
+                - cidrBlock
+                - region
+            required:
+            - parameters

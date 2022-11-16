@@ -2,8 +2,6 @@
 
 `kind create cluster --config=cluster-config.yml`
 
-`kubectl create namespace crossplane-system`
-
 `helm repo add crossplane-stable https://charts.crossplane.io/stable`
 
 `help repo update`
@@ -23,6 +21,6 @@ https://github.com/crossplane-contrib/provider-aws/tree/master/examples/ec2
 
 
 ### Creating the secret locally
-`AWS_PROFILE=default && echo -e "[default]\naws_access_key_id = $(aws configure get aws_access_key_id --profile $AWS_PROFILE \naws_secret_access_key = $(aws configure get aws_secret_access_key --profile $AWS_PROFILE)" > creds.conf`
+`AWS_PROFILE=default && echo -e "[default]\naws_access_key_id = $(aws configure get aws_access_key_id --profile $AWS_PROFILE)\naws_secret_access_key = $(aws configure get aws_secret_access_key --profile $AWS_PROFILE)" > creds.conf`
 
 `kubectl create secret generic aws-secret-creds -n crossplane-system --from-file=creds=./creds.conf`
